@@ -1,16 +1,17 @@
-# Prisma + tRPC
+# University Finance System
 
-## Features
+## SENG 371 Group 8
 
-- 🧙‍♂️ E2E typesafety with [tRPC](https://trpc.io)
-- ⚡ Full-stack React with Next.js
-- ⚡ Database with Prisma
-- ⚙️ VSCode extensions
-- 🎨 ESLint + Prettier
-- 💚 CI setup using GitHub Actions:
-  - ✅ E2E testing with [Playwright](https://playwright.dev/)
-  - ✅ Linting
-- 🔐 Validates your env vars on build and start
+| Member        | Student Number |
+| ------------- | -------------- |
+| Keith Radford | V00918086      |
+| James Kaberry | V00931454      |
+| Alex Huang    | V00915647      |
+| Naoya Pimlott | V00914908      |
+
+## Documentation
+
+For all documentation on the project, please refer to this repository's [Wiki page](https://github.com/keithradford/university-finance-system/wiki).
 
 ## Setup
 
@@ -93,7 +94,3 @@ Go to [dashboard.render.com/blueprints](https://dashboard.render.com/blueprints)
     </tr>
   </tbody>
 </table>
-
----
-
-Created by [@alexdotjs](https://twitter.com/alexdotjs).
