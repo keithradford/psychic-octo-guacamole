@@ -12,9 +12,9 @@ export const Header = () => {
       <Logo showAppName={true} />
       <section>
         <NavLink link="/" text="Home" />
-        <NavLink link="/" text="Financial Statements" />
-        <NavLink link="/" text="Budget Tools" />
-        <NavLink link="/" text="Reporting & Analysis" />
+        <NavLink link="/financial" text="Financial Statements" />
+        <NavLink link="/budget" text="Budget Tools" />
+        <NavLink link="/reporting" text="Reporting & Analysis" />
       </section>
       <section className="flex space-x-4">
         <Button theme="outline" onClick={() => {}}>

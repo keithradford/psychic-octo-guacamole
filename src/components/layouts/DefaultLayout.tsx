@@ -8,13 +8,13 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   return (
     <>
       <Head>
-        <title>Prisma Starter</title>
+        <title>UVic University Management System</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className="flex flex-col">
         <Header />
-        {children}
+        <div className="px-12">{children}</div>
       </main>
     </>
   );
