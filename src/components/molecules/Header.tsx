@@ -19,8 +19,8 @@ export const Header = () => {
       <section className="flex space-x-4">
         <Button theme="outline" onClick={() => {}}>
           <div className="flex items-center space-x-2">
-            <MagnifyingGlassIcon className="w-4 h-4 " />
-            <ChevronUpIcon className="w-4 h-4 " />
+            <MagnifyingGlassIcon className="w-4 h-4" />
+            <ChevronUpIcon className="w-4 h-4" />
           </div>
         </Button>
         <Button theme="outline" onClick={() => {}}>
