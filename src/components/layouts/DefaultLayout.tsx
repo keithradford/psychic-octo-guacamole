@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { ReactNode } from 'react';
+import { Header } from '../molecules';
 
 type DefaultLayoutProps = { children: ReactNode };
 
@@ -11,7 +12,10 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>{children}</main>
+      <main className="flex flex-col">
+        <Header />
+        {children}
+      </main>
     </>
   );
 };

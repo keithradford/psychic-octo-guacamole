@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import type { AppProps, AppType } from 'next/app';
 import type { ReactElement, ReactNode } from 'react';
-import { DefaultLayout } from '~/components/DefaultLayout';
+import { DefaultLayout } from '~/components/layouts';
 import { trpc } from '~/utils/trpc';
 import '../styles/globals.css';
 
