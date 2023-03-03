@@ -1,10 +1,10 @@
-import React from 'react';
-import { Logo, NavLink, Button } from '../atoms';
+import React from "react";
+import { Logo, NavLink, Button } from "../atoms";
 import {
   KeyIcon,
   MagnifyingGlassIcon,
   ChevronUpIcon,
-} from '@heroicons/react/24/outline';
+} from "@heroicons/react/24/outline";
 
 export const Header = () => {
   return (

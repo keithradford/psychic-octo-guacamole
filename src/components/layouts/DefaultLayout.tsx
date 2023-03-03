@@ -1,6 +1,6 @@
-import Head from 'next/head';
-import { ReactNode } from 'react';
-import { Header } from '../molecules';
+import Head from "next/head";
+import { ReactNode } from "react";
+import { Header } from "../molecules";
 
 type DefaultLayoutProps = { children: ReactNode };
 
@@ -12,9 +12,11 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col">
+      <main className="">
         <Header />
-        <div className="px-12">{children}</div>
+        <div className="flex flex-col items-center px-12">
+          <div className="flex w-full max-w-5xl">{children}</div>
+        </div>
       </main>
     </>
   );
