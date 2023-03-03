@@ -1,5 +1,6 @@
-import Link from 'next/link';
-import React from 'react';
+import classNames from "classnames";
+import Link from "next/link";
+import React from "react";
 
 interface LogoProps {
   showAppName?: boolean;
@@ -9,7 +10,9 @@ export const Logo = ({ showAppName }: LogoProps) => {
   return (
     <Link href="/" className="flex items-center space-x-2">
       <img src="./uvic-logo.svg" className="w-44 h-28" />
-      {showAppName && (
+      <div
+        className={classNames(showAppName ? "sm:hidden lg:block" : "hidden")}
+      >
         <div className="flex space-x-2">
           <div className="border-l border-gray-500" />
           <div className="flex flex-col text-sm font-extralight">
@@ -18,7 +21,7 @@ export const Logo = ({ showAppName }: LogoProps) => {
             <h1>System</h1>
           </div>
         </div>
-      )}
+      </div>
     </Link>
   );
 };
