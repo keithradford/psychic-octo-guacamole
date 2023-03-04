@@ -9,6 +9,8 @@
 | Alex Huang    | V00915647      |
 | Naoya Pimlott | V00914908      |
 
+For a detailed list on contributions see our [Wiki page](https://github.com/keithradford/university-finance-system/wiki/Contributions).
+
 ## Documentation
 
 For all documentation on the project, please refer to this repository's [Wiki page](https://github.com/keithradford/university-finance-system/wiki).
@@ -29,6 +31,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The University Finance System is deployed and hosted using the [Vercel Platform](https://vercel.com).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Check out our [Wiki page on CI/CD](https://github.com/keithradford/university-finance-system/wiki/Continuous-Integration-&-Continuous-Deployment) for more details.
