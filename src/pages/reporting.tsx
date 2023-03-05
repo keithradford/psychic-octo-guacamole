@@ -2,6 +2,7 @@ import { NextPageWithLayout } from "./_app";
 
 import React, { PureComponent } from 'react';
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie } from 'recharts';
+import { Button } from "@/components/atoms";
 
 const data = [
   {
@@ -33,12 +34,61 @@ const data01 = [
   { name: 'Group F', value: 189 },
 ];
 
+const colors: string[] = ["#FFBF00", "#DE3163", "#CCCCFF", "#6495ED", "#9FE2BF", "#40E0D0"];
+
 const ReportingPage: NextPageWithLayout = () => {
-  return (<div>
-    <ResponsiveContainer width={700} height={700}>
+  return (<div className="flex flex-row w-full py-24" style={{justifyContent: 'space-around', overflow: 'auto'}}>
+      <div className="flex" style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+      <ResponsiveContainer width={700} height={500}>
+        <PieChart width={400} height={400}>
+        <text x='50%'
+                y='2%'
+                dy={+12}
+                className={'font-semibold text-primary'}
+                style={{fontSize: 24, fill: 'rgb(0 84 147)'}}
+                textAnchor='middle'
+                z={100}>
+                Meal Plan: Breakdown Analyis
+          </text>
+          <Pie
+            dataKey="value"
+            isAnimationActive={false}
+            data={data01}
+            cx="50%"
+            cy="50%"
+            outerRadius={175}
+            label={(props) => {
+              const RADIAN = Math.PI / 180;
+              // eslint-disable-next-line
+              const radius = 25 + props.innerRadius + (props.outerRadius - props.innerRadius);
+              // eslint-disable-next-line
+              const x = props.cx + radius * Math.cos(-props.midAngle * RADIAN);
+              // eslint-disable-next-line
+              const y = props.cy + radius * Math.sin(-props.midAngle * RADIAN);
+              return (
+                <text x={x} y={y} textAnchor={x > props.cx ? "start" : "end"} dominantBaseline="central" fill="rgb(0 84 147)" className="font-semibold text-primary">
+                  {`${props.name} - $${props.value}`}
+                </text>
+              )
+            }}
+          >
+          {data01.map((entry, index) => {
+            return <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+          })}
+          </Pie>
+          <Tooltip />
+        </PieChart>
+      </ResponsiveContainer>
+      <div className="flex w-full" style={{justifyContent: 'right'}}>
+        <Button theme="outline" onClick={() => {}}>Export Data</Button>
+      </div>
+      
+      </div>
+      <div className="flex" style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+    <ResponsiveContainer width={700} height={500}>
         <BarChart
-          width={500}
-          height={300}
+          width={400}
+          height={200}
           data={data}
           title={"Cost of Tuition per Term"}
           margin={{
@@ -48,31 +98,30 @@ const ReportingPage: NextPageWithLayout = () => {
             bottom: 5,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
+          <text x='50%'
+                y='2%'
+                dy={+12}
+                className={'font-semibold text-primary'}
+                style={{fontSize: 24, fill: 'rgb(0 84 147'}}
+                textAnchor='middle'
+                z={100}>
+                Cost of Tuition per Term
+          </text>
           <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
+          <YAxis/>
+          <Tooltip cursor={{fillOpacity: 0.4}}/>
           <Legend />
           <Bar dataKey="class1" fill="#8884d8" />
           <Bar dataKey="class2" fill="#82ca9d" />
           <Bar dataKey="class3" fill="#863d1c" />
         </BarChart>
       </ResponsiveContainer>
-      <ResponsiveContainer width={700} height={700}>
-        <PieChart width={400} height={400}>
-          <Pie
-            dataKey="value"
-            isAnimationActive={false}
-            data={data01}
-            cx="50%"
-            cy="50%"
-            outerRadius={80}
-            fill="#8884d8"
-            label
-          />
-          <Tooltip />
-        </PieChart>
-      </ResponsiveContainer>
+      <div className="flex w-full" style={{justifyContent: 'right'}}>
+        <Button theme="outline" onClick={() => {}}>Export Data</Button>
+      </div>
+      
+      </div>
+      
       </div>);
 };
 
