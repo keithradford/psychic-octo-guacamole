@@ -1,0 +1,179 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Budget page should render correctly 1`] = `
+<div>
+  <div
+    class="flex flex-col w-full space-y-5"
+  >
+    <div
+      class="flex flex-row flex-grow"
+    >
+      <div
+        class="flex flex-col space-y-1 w-60"
+      >
+        <h1
+          class="text-xl"
+        >
+          Income
+        </h1>
+        <p
+          class="font-light"
+        >
+          $
+          671
+           of $
+          1000
+        </p>
+      </div>
+      <div
+        class="flex flex-col w-full space-y-2"
+      >
+        <div
+          class="flex items-end justify-between"
+        >
+          <h1
+            class="text-lg"
+          >
+            Paycheque
+          </h1>
+          <h2
+            class="text-sm font-light"
+          >
+            $
+            671
+             of $
+            1000
+          </h2>
+        </div>
+        <div
+          class="w-full h-4 border border-gray-400 rounded-md"
+        >
+          <div
+            class="bg-green-300 h-full rounded-md"
+            data-testid="percent-bar"
+            style="width: 67.10000000000001%;"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="w-full border"
+    />
+    <div
+      class="flex flex-row flex-grow"
+    >
+      <div
+        class="flex flex-col space-y-1 w-60"
+      >
+        <h1
+          class="text-xl"
+        >
+          Spending
+        </h1>
+        <p
+          class="font-light"
+        >
+          $
+          95
+           of $
+          300
+        </p>
+      </div>
+      <div
+        class="flex flex-col w-full space-y-5"
+      >
+        <div
+          class="flex flex-col w-full space-y-2"
+        >
+          <div
+            class="flex items-end justify-between"
+          >
+            <h1
+              class="text-lg"
+            >
+              Entertainment
+            </h1>
+            <h2
+              class="text-sm font-light"
+            >
+              $
+              15
+               of $
+              100
+            </h2>
+          </div>
+          <div
+            class="w-full h-4 border border-gray-400 rounded-md"
+          >
+            <div
+              class="bg-green-300 h-full rounded-md"
+              data-testid="percent-bar"
+              style="width: 15%;"
+            />
+          </div>
+        </div>
+        <div
+          class="flex flex-col w-full space-y-2"
+        >
+          <div
+            class="flex items-end justify-between"
+          >
+            <h1
+              class="text-lg"
+            >
+              Food
+            </h1>
+            <h2
+              class="text-sm font-light"
+            >
+              $
+              30
+               of $
+              100
+            </h2>
+          </div>
+          <div
+            class="w-full h-4 border border-gray-400 rounded-md"
+          >
+            <div
+              class="bg-green-300 h-full rounded-md"
+              data-testid="percent-bar"
+              style="width: 30%;"
+            />
+          </div>
+        </div>
+        <div
+          class="flex flex-col w-full space-y-2"
+        >
+          <div
+            class="flex items-end justify-between"
+          >
+            <h1
+              class="text-lg"
+            >
+              Transport
+            </h1>
+            <h2
+              class="text-sm font-light"
+            >
+              $
+              50
+               of $
+              100
+            </h2>
+          </div>
+          <div
+            class="w-full h-4 border border-gray-400 rounded-md"
+          >
+            <div
+              class="bg-green-300 h-full rounded-md"
+              data-testid="percent-bar"
+              style="width: 50%;"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
