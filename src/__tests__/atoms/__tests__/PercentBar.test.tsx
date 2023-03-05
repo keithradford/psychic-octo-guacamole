@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
-import { PercentBar } from "../PercentBar";
+import { PercentBar } from "../../../components/atoms/PercentBar";
 
 describe("Percent bar", () => {
   it("should display the title", () => {

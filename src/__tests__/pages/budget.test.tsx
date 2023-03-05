@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
-import BudgetPage, { BudgetSectionTitle } from "../budget";
+import BudgetPage, { BudgetSectionTitle } from "../../pages/budget";
 
 describe("Budget page", () => {
   it("should render correctly", () => {
