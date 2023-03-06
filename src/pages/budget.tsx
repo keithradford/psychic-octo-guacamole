@@ -1,7 +1,7 @@
 import { PercentBar } from "../components/atoms";
 import { NextPageWithLayout } from "./_app";
 
-const BudgetSectionTitle = ({
+export const BudgetSectionTitle = ({
   title,
   max,
   current,

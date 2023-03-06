@@ -23,6 +23,7 @@ export const PercentBar = ({ title, max, current }: PercentBarProps) => {
       </div>
       <div className="w-full h-4 border border-gray-400 rounded-md">
         <div
+          data-testid="percent-bar"
           style={{ width: percentWidth }}
           className={"bg-green-300 h-full rounded-md"}
         ></div>
