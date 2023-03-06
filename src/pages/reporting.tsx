@@ -57,18 +57,8 @@ const colors: string[] = [
 
 const ReportingPage: NextPageWithLayout = () => {
   return (
-    <div
-      className="flex flex-row w-full py-24"
-      style={{ justifyContent: "space-around", overflow: "auto" }}
-    >
-      <div
-        className="flex"
-        style={{
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+    <div className="flex flex-row w-full py-24 place-content-around ">
+      <div className="flex flex-col justify-center content-center">
         <ResponsiveContainer width={700} height={500}>
           <PieChart width={400} height={400}>
             <text
@@ -128,20 +118,13 @@ const ReportingPage: NextPageWithLayout = () => {
             <Tooltip />
           </PieChart>
         </ResponsiveContainer>
-        <div className="flex w-full" style={{ justifyContent: "right" }}>
+        <div className="flex w-full justify-end">
           <Button theme="outline" onClick={() => {}}>
             Export Data
           </Button>
         </div>
       </div>
-      <div
-        className="flex"
-        style={{
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <div className="flex flex-col justify-center content-center">
         <ResponsiveContainer width={700} height={500}>
           <BarChart
             width={400}
@@ -175,7 +158,7 @@ const ReportingPage: NextPageWithLayout = () => {
             <Bar dataKey="class3" fill="#863d1c" />
           </BarChart>
         </ResponsiveContainer>
-        <div className="flex w-full" style={{ justifyContent: "right" }}>
+        <div className="flex w-full justify-end">
           <Button theme="outline" onClick={() => {}}>
             Export Data
           </Button>
