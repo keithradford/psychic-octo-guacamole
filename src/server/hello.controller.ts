@@ -1,10 +1,6 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
-import {
-  FilterQueryInput,
-  CreateHelloSchema,
-  ParamsInput,
-} from "./hello.schema";
+import { CreateHelloSchema, ParamsInput } from "./hello.schema";
 
 const prisma = new PrismaClient();
 
