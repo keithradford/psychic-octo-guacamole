@@ -5,10 +5,15 @@ import {
   getBudgetByTermController,
 } from "../controllers/budget.controller";
 import {
+  getAllCoursesController,
+  updateCourse,
+} from "../controllers/course.controller";
+import {
   createFinancialStatementController,
   getFinancialStatementByTermController,
 } from "../controllers/financial-statement.controller";
 import { createBudgetSchema, getBudgetSchema } from "../schemas/budget.schema";
+import { updateCourseSchema } from "../schemas/course.schema";
 import {
   createFinancialStatementSchema,
   getFinancialStatementSchema,
@@ -32,6 +37,10 @@ export const appRouter = t.router({
   getBudgetByTerm: t.procedure
     .input(getBudgetSchema)
     .query(({ input }) => getBudgetByTermController({ input })),
+  getAllCourses: t.procedure.query(() => getAllCoursesController()),
+  updateCourse: t.procedure.input(updateCourseSchema).mutation(({ input }) => {
+    updateCourse({ input });
+  }),
 });
 
 export type AppRouter = typeof appRouter;
