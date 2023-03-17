@@ -27,7 +27,10 @@ export const getBudgetByTermController = async ({
 }: {
   input: CreateBudgetSchema;
 }) => {
-  const budget = await prisma.budget.findFirst({ where: { term: input.term } });
+  const budget = await prisma.budget.findFirst({
+    where: { term: input.term },
+    include: { budgetBars: true },
+  });
 
   return {
     budget,
