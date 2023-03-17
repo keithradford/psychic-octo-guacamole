@@ -7,9 +7,6 @@ export default function Home() {
   const { mutateAsync: createBudget } = trpc.createBudget.useMutation({});
   const { mutateAsync: createFinancialStatement } =
     trpc.createFinancialStatement.useMutation({});
-  const financialStatement = trpc.getFinancialStatementByTerm.useQuery({
-    term: "SPRING 2022",
-  });
   const budget = trpc.getBudgetByTerm.useQuery({ term: "SPRING 2022" });
 
   const buttonOnClick = () => {
@@ -26,7 +23,6 @@ export default function Home() {
       <button onClick={buttonOnClick2}> hello2 </button>
       UVic Finance System
       <div>{JSON.stringify(budget.data?.budget)}</div>
-      <div>{JSON.stringify(financialStatement.data?.financialStatement)}</div>
     </div>
   );
 }

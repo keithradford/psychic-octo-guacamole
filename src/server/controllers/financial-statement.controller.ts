@@ -28,13 +28,12 @@ export const getFinancialStatementByTermController = async ({
 }: {
   input: CreateFinancialStatementSchema;
 }) => {
-  const courses: Course[] = [];
-
-  const financialStatement = await prisma.financialStatemetn.create({
-    data: {
+  const financialStatement = await prisma.financialStatemetn.findFirst({
+    where: {
       term: input.term,
-      paid: false,
-      courses: { create: courses },
+    },
+    include: {
+      courses: true,
     },
   });
 
