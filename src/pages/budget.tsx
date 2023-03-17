@@ -33,10 +33,9 @@ export const BudgetSectionTitle = ({
 };
 
 const BudgetPage: NextPageWithLayout = () => {
-  const [isAddModalOpen, setAddModalOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
   const [isIncomeSelected, setIsIncomeSelected] = useState(true);
 
-  const [isCurrentValueModalOpen, setCurrentValueModalOpen] = useState(false);
   const [selectedPercentBar, setSelectedPercentBar] = useState<BudgetBar>();
 
   const [titleInput, setTitleInput] = useState("");
@@ -107,7 +106,7 @@ const BudgetPage: NextPageWithLayout = () => {
           current={incomeBarStats.current}
           buttonOnClick={() => {
             setIsIncomeSelected(true);
-            setAddModalOpen(true);
+            setModalOpen(true);
           }}
         />
         <div className="flex flex-col w-full space-y-5">
@@ -119,12 +118,12 @@ const BudgetPage: NextPageWithLayout = () => {
                 max={bar.max}
                 current={bar.currentVal}
                 onClick={() => {
-                  setCurrentValueModalOpen(true);
-
                   setSelectedPercentBar(bar);
                   setCurrentValueInput(bar.currentVal);
                   setTitleInput(bar.title);
                   setMaxInput(bar.max);
+
+                  setModalOpen(true);
                 }}
               />
             );
@@ -139,7 +138,7 @@ const BudgetPage: NextPageWithLayout = () => {
           current={spendBarStats.current}
           buttonOnClick={() => {
             setIsIncomeSelected(false);
-            setAddModalOpen(true);
+            setModalOpen(true);
           }}
         />
         <div className="flex flex-col w-full space-y-5">
@@ -151,12 +150,12 @@ const BudgetPage: NextPageWithLayout = () => {
                 max={bar.max}
                 current={bar.currentVal}
                 onClick={() => {
-                  setCurrentValueModalOpen(true);
-
                   setSelectedPercentBar(bar);
                   setCurrentValueInput(bar.currentVal);
                   setTitleInput(bar.title);
                   setMaxInput(bar.max);
+
+                  setModalOpen(true);
                 }}
               />
             );
@@ -164,70 +163,35 @@ const BudgetPage: NextPageWithLayout = () => {
         </div>
       </div>
       <Modal
-        title={`Add an ${isIncomeSelected ? "income" : "expense"} stream`}
+        title={
+          selectedPercentBar
+            ? `Set value for ${selectedPercentBar?.title}`
+            : `Add an ${isIncomeSelected ? "income" : "expense"} stream`
+        }
         confirmOnClick={() => {
           if (!budget.data?.budget) return;
-          addBudgetBarToBudget({
-            budgetId: budget.data.budget.id,
-            current: currentValueInput,
-            isIncome: isIncomeSelected,
-            max: maxInput,
-            title: titleInput,
-          });
-        }}
-        open={isAddModalOpen}
-        setModal={(open: boolean) => {
-          setAddModalOpen(open);
 
-          setTitleInput("");
-          setCurrentValueInput(0);
-          setMaxInput(0);
+          if (selectedPercentBar) {
+            updateBudgetBar({
+              budgetId: budget.data.budget.id,
+              budgetBarId: selectedPercentBar.id,
+              current: currentValueInput,
+              max: maxInput,
+              title: titleInput,
+            });
+          } else {
+            addBudgetBarToBudget({
+              budgetId: budget.data.budget.id,
+              current: currentValueInput,
+              isIncome: isIncomeSelected,
+              max: maxInput,
+              title: titleInput,
+            });
+          }
         }}
-      >
-        <div className="flex flex-col space-y-3">
-          <Input
-            title={"Title..."}
-            value={titleInput}
-            setValue={(val: string) => {
-              setTitleInput(val.toString());
-            }}
-          />
-          <Input
-            title={"Max Value..."}
-            value={maxInput}
-            setValue={(val: string) => {
-              if (val === "") setMaxInput(0);
-              const fl = parseFloat(val);
-              if (!isNaN(fl)) setMaxInput(fl);
-            }}
-          />
-          <Input
-            title={"Initial Value..."}
-            value={currentValueInput}
-            setValue={(val: string) => {
-              if (val === "") setCurrentValueInput(0);
-              const fl = parseFloat(val);
-              if (!isNaN(fl)) setCurrentValueInput(fl);
-            }}
-          />
-        </div>
-      </Modal>
-      <Modal
-        title={`Set value for ${selectedPercentBar?.title}`}
-        confirmOnClick={() => {
-          if (!budget.data?.budget || !selectedPercentBar) return;
-
-          updateBudgetBar({
-            budgetId: budget.data.budget.id,
-            budgetBarId: selectedPercentBar.id,
-            current: currentValueInput,
-            max: maxInput,
-            title: titleInput,
-          });
-        }}
-        open={isCurrentValueModalOpen}
+        open={isModalOpen}
         setModal={(open: boolean) => {
-          setCurrentValueModalOpen(open);
+          setModalOpen(open);
 
           setTitleInput("");
           setCurrentValueInput(0);
