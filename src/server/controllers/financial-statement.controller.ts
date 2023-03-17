@@ -41,3 +41,15 @@ export const getFinancialStatementByTermController = async ({
     financialStatement,
   };
 };
+
+export const getAllFinancialStatementsController = async () => {
+  const financialStatements = await prisma.financialStatemetn.findMany({
+    include: {
+      courses: true,
+    },
+  });
+
+  return {
+    financialStatements,
+  };
+};

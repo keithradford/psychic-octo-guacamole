@@ -1,6 +1,6 @@
 import { NextPageWithLayout } from "./_app";
 
-import React, { PureComponent } from "react";
+import React, { PureComponent, useMemo } from "react";
 import {
   BarChart,
   Bar,
@@ -15,27 +15,7 @@ import {
   Pie,
 } from "recharts";
 import { Button } from "@/components/atoms";
-
-const data = [
-  {
-    name: "Winter",
-    class1: 600,
-    class2: 400,
-    class3: 523,
-  },
-  {
-    name: "Summer",
-    class1: 660,
-    class2: 500,
-    class3: 670,
-  },
-  {
-    name: "Spring",
-    class1: 680,
-    class2: 700,
-    class3: 690,
-  },
-];
+import { trpc } from "@/utils/trpc";
 
 const data01 = [
   { name: "Group A", value: 400 },
@@ -56,9 +36,48 @@ const colors: string[] = [
 ];
 
 const ReportingPage: NextPageWithLayout = () => {
+  const financialStatements = trpc.getAllFinancialStatements.useQuery();
+  const budget = trpc.getBudgetByTerm.useQuery({ term: "SPRING 2022" });
+
+  const barChartData = useMemo(() => {
+    if (!financialStatements.data?.financialStatements) return [];
+
+    const data = [];
+
+    financialStatements.data.financialStatements.forEach((statement) => {
+      const courses: Map<string, number> = new Map<string, number>();
+      statement.courses.forEach((course) => {
+        courses.set(course.subjectCode, course.cost);
+      });
+      data.push({
+        name: statement.term,
+        ...courses,
+      });
+    });
+  }, [financialStatements.data?.financialStatements]);
+
+  const pieChartData = useMemo(() => {
+    if (!budget.data?.budget?.budgetBars) return [];
+
+    const data: { name: string; value: number }[] = [];
+
+    budget.data.budget.budgetBars
+      .filter((bar) => {
+        return !bar.isIncome;
+      })
+      .forEach((bar) => {
+        data.push({
+          name: bar.title,
+          value: bar.currentVal,
+        });
+      });
+
+    return data;
+  }, [budget.data?.budget]);
+
   return (
     <div className="flex flex-row w-full py-24 place-content-around ">
-      <div className="flex flex-col justify-center content-center">
+      <div className="flex flex-col content-center justify-center">
         <ResponsiveContainer width={700} height={500}>
           <PieChart width={400} height={400}>
             <text
@@ -75,7 +94,7 @@ const ReportingPage: NextPageWithLayout = () => {
             <Pie
               dataKey="value"
               isAnimationActive={false}
-              data={data01}
+              data={pieChartData}
               cx="50%"
               cy="50%"
               outerRadius={175}
@@ -106,7 +125,7 @@ const ReportingPage: NextPageWithLayout = () => {
                 );
               }}
             >
-              {data01.map((entry, index) => {
+              {pieChartData.map((entry, index) => {
                 return (
                   <Cell
                     key={`cell-${index}`}
@@ -118,18 +137,18 @@ const ReportingPage: NextPageWithLayout = () => {
             <Tooltip />
           </PieChart>
         </ResponsiveContainer>
-        <div className="flex w-full justify-end">
+        <div className="flex justify-end w-full">
           <Button theme="outline" onClick={() => {}}>
             Export Data
           </Button>
         </div>
       </div>
-      <div className="flex flex-col justify-center content-center">
+      <div className="flex flex-col content-center justify-center">
         <ResponsiveContainer width={700} height={500}>
           <BarChart
             width={400}
             height={200}
-            data={data}
+            data={barChartData}
             title={"Cost of Tuition per Term"}
             margin={{
               top: 5,
@@ -158,7 +177,7 @@ const ReportingPage: NextPageWithLayout = () => {
             <Bar dataKey="class3" fill="#863d1c" />
           </BarChart>
         </ResponsiveContainer>
-        <div className="flex w-full justify-end">
+        <div className="flex justify-end w-full">
           <Button theme="outline" onClick={() => {}}>
             Export Data
           </Button>

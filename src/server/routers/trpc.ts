@@ -10,6 +10,7 @@ import {
 } from "../controllers/course.controller";
 import {
   createFinancialStatementController,
+  getAllFinancialStatementsController,
   getFinancialStatementByTermController,
 } from "../controllers/financial-statement.controller";
 import { createBudgetSchema, getBudgetSchema } from "../schemas/budget.schema";
@@ -30,6 +31,9 @@ export const appRouter = t.router({
   getFinancialStatementByTerm: t.procedure
     .input(getFinancialStatementSchema)
     .query(({ input }) => getFinancialStatementByTermController({ input })),
+  getAllFinancialStatements: t.procedure.query(() =>
+    getAllFinancialStatementsController()
+  ),
 
   createBudget: t.procedure
     .input(createBudgetSchema)
