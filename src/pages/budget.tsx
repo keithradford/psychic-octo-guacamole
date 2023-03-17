@@ -43,10 +43,38 @@ const BudgetPage: NextPageWithLayout = () => {
     });
   }, [financialStatement.data?.budget?.budgetBars]);
 
+  const incomeBarStats = useMemo(() => {
+    let max = 0;
+    let current = 0;
+
+    incomeBars.forEach((bar) => {
+      max += bar.max;
+      current += bar.currentVal;
+    });
+
+    return { max, current };
+  }, [incomeBars]);
+
+  const spendBarStats = useMemo(() => {
+    let max = 0;
+    let current = 0;
+
+    spendBars.forEach((bar) => {
+      max += bar.max;
+      current += bar.currentVal;
+    });
+
+    return { max, current };
+  }, [spendBars]);
+
   return (
     <div className="flex flex-col w-full space-y-5">
       <div className="flex flex-row flex-grow">
-        <BudgetSectionTitle title="Income" max={1000} current={671} />
+        <BudgetSectionTitle
+          title="Income"
+          max={incomeBarStats.max}
+          current={incomeBarStats.current}
+        />
         <div className="flex flex-col w-full space-y-5">
           {incomeBars.map((bar) => {
             return (
@@ -62,7 +90,11 @@ const BudgetPage: NextPageWithLayout = () => {
       </div>
       <div className="w-full border" />
       <div className="flex flex-row flex-grow">
-        <BudgetSectionTitle title="Spending" max={300} current={95} />
+        <BudgetSectionTitle
+          title="Spending"
+          max={spendBarStats.max}
+          current={spendBarStats.current}
+        />
         <div className="flex flex-col w-full space-y-5">
           {spendBars.map((bar) => {
             return (
