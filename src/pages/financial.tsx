@@ -46,12 +46,15 @@ const FinancialPage: NextPageWithLayout = () => {
 
   return (
     <div className="flex flex-col w-full max-w-5xl">
-      <div>
+      <div className="space-x-2">
         <p className="inline-block m-5 text-lg font-bold">
           Financial Statements
         </p>
         <Button theme="outline" onClick={() => {}}>
           Filter
+        </Button>
+        <Button theme="filled" onClick={() => {}}>
+          Add Course
         </Button>
       </div>
       <div className="flex flex-col content-between max-w-full border border-black">

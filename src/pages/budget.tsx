@@ -1,5 +1,5 @@
 import { Modal } from "@/components/molecules";
-import { trpc } from "@/utils/trpc";
+import { trpc } from "../utils/trpc";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { BudgetBar } from "@prisma/client";
 import { useMemo, useState } from "react";
