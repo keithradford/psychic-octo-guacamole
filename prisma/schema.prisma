@@ -7,8 +7,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Hello {
-  id        String   @id @default(uuid())
-  message   String
+model Course {
+  id                   String              @id @default(uuid())
+  subjectCode          String
+  title                String
+  cost                 Float
+  credits              Float
+  FinancialStatemetn   FinancialStatemetn? @relation(fields: [financialStatemetnId], references: [id])
+  financialStatemetnId String?
 }
 
+model FinancialStatemetn {
+  id      String   @id @default(uuid())
+  courses Course[]
+  term    String
+  paid    Boolean
+}
+
+model BudgetBar {
+  id         String  @id @default(uuid())
+  title      String
+  currentVal Float
+  max        Float
+  isIncome   Boolean
+  Budget     Budget? @relation(fields: [budgetId], references: [id])
+  budgetId   String?
+}
+
+model Budget {
+  id         String      @id @default(uuid())
+  term       String
+  budgetBars BudgetBar[]
+}

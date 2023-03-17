@@ -1,14 +1,14 @@
 import React from "react";
 
 interface CourseProps {
-  courseNumber: string;
+  subjectCode: string;
   courseName: string;
 }
 
-const Course = ({ courseNumber, courseName }: CourseProps) => {
+const Course = ({ subjectCode, courseName }: CourseProps) => {
   return (
     <div className="flex-1 text-left spacing-y-1">
-      <p className="font-semibold">{courseNumber}</p>
+      <p className="font-semibold">{subjectCode}</p>
       <p className="text-xs">{courseName}</p>
     </div>
   );

@@ -2,116 +2,79 @@ import { useState, useMemo } from "react";
 import { NextPageWithLayout } from "./_app";
 import { Button } from "../components/atoms/Button";
 import Course from "../components/atoms/Course";
-
-//Course Interface
-interface Course {
-  courseNumber: string;
-  courseName: string;
-  cost: number;
-  credit: number;
-}
+import { trpc } from "@/utils/trpc";
+import { Course as CourseObj } from "@prisma/client";
 
 //Row Component
-const Row: ({
-  courseNumber,
-  courseName,
-  cost,
-  credit,
-}: Course) => JSX.Element = ({
-  courseNumber,
-  courseName,
-  cost,
-  credit,
-}: Course) => {
+const Row = ({ course }: { course: CourseObj }) => {
+  const { cost, credits, subjectCode, title } = course;
   return (
     <div className="flex items-center m-3 ">
-      <Course courseNumber={courseNumber} courseName={courseName} />
+      <Course subjectCode={subjectCode} courseName={title} />
       <p className="flex-1 text-center">${cost}</p>
-      <p className="flex-1 text-center">{credit}</p>
+      <p className="flex-1 text-center">{credits}</p>
     </div>
   );
 };
 
 const FinancialPage: NextPageWithLayout = () => {
-  const [courses, setCourses] = useState<Course[]>([
-    {
-      courseNumber: "Seng 321",
-      courseName: "Requirements Engineering",
-      cost: 200.99,
-      credit: 1.5,
-    },
-    {
-      courseNumber: "Seng 321",
-      courseName: "Requirements Engineering",
-      cost: 200.99,
-      credit: 1.5,
-    },
-    {
-      courseNumber: "Seng 371",
-      courseName: "Software Evolution",
-      cost: 200.99,
-      credit: 1.5,
-    },
-  ]);
+  const financialStatement = trpc.getFinancialStatementByTerm.useQuery({
+    term: "SPRING 2022",
+  });
 
-  const rows: JSX.Element[] = useMemo(
-    () =>
-      courses.map((course, index) => (
-        <Row
-          key={index}
-          courseNumber={course.courseNumber}
-          courseName={course.courseName}
-          cost={course.cost}
-          credit={course.credit}
-        />
-      )),
-    [courses]
-  );
+  const totalCost: number = useMemo(() => {
+    if (!financialStatement.data?.financialStatement?.courses) return 0;
 
-  const totalCost: any = useMemo(
-    () =>
-      courses.reduce((total, current): any => {
-        if (total.cost && current.cost) {
-          return total.cost + current.cost;
-        } else {
-          return Number(total) + current.cost;
-        }
-      }),
-    [courses]
-  );
+    let cost = 0;
+    financialStatement.data?.financialStatement.courses.forEach((course) => {
+      cost += course.cost;
+    });
 
-  const totalCredits: any = useMemo(
-    () =>
-      courses.reduce((total, current): any => {
-        if (total.credit) {
-          return total.credit + current.credit;
-        } else {
-          return Number(total) + current.credit;
-        }
-      }),
-    [courses]
-  );
+    return cost;
+  }, [financialStatement.data?.financialStatement]);
+
+  const totalCredits: number = useMemo(() => {
+    if (!financialStatement.data?.financialStatement?.courses) return 0;
+
+    let credits = 0;
+    financialStatement.data?.financialStatement.courses.forEach((course) => {
+      credits += course.credits;
+    });
+
+    return credits;
+  }, [financialStatement.data?.financialStatement]);
 
   return (
     <div className="flex flex-col w-full max-w-5xl">
-      <div>
-        <p className="font-bold text-lg m-5 inline-block">
+      <div className="space-x-2">
+        <p className="inline-block m-5 text-lg font-bold">
           Financial Statements
         </p>
         <Button theme="outline" onClick={() => {}}>
           Filter
         </Button>
+        <Button theme="filled" onClick={() => {}}>
+          Add Course
+        </Button>
       </div>
-      <div className="flex max-w-full border border-black flex-col content-between">
+      <div className="flex flex-col content-between max-w-full border border-black">
         <div className="flex m-3">
-          <p className="flex-1 text-left text-lg font-bold">Courses</p>
-          <p className="flex-1 text-center text-lg font-bold">Costs</p>
-          <p className="flex-1 text-center text-lg font-bold">Credits</p>
+          <p className="flex-1 text-lg font-bold text-left">Courses</p>
+          <p className="flex-1 text-lg font-bold text-center">Costs</p>
+          <p className="flex-1 text-lg font-bold text-center">Credits</p>
         </div>
-        {rows}
+        {financialStatement.data?.financialStatement ? (
+          financialStatement.data.financialStatement.courses.map(
+            (course, index) => {
+              return <Row key={index} course={course} />;
+            }
+          )
+        ) : (
+          <></>
+        )}
       </div>
-      <div className="flex max-w-full flex-col ">
-        <div className="flex m-3 items-center">
+      <div className="flex flex-col max-w-full ">
+        <div className="flex items-center m-3">
           <div className="flex-1"></div>
           <div className="flex-1 ">
             <div className="flex items-center">

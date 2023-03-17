@@ -1,4 +1,3 @@
-import * as trpc from "@trpc/server";
 import { inferAsyncReturnType } from "@trpc/server";
 import * as trpcNext from "@trpc/server/adapters/next";
 // import { decodeAndVerifyJwtToken } from "./somewhere/in/your/app/utils";
