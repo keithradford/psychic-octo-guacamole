@@ -1,12 +1,11 @@
-import { useState, useMemo, use } from "react";
-import { NextPageWithLayout } from "./_app";
-import { Button } from "../components/atoms/Button";
-import Course from "../components/atoms/Course";
+import { Button, Dropdown } from "@/components/atoms";
+import Course from "@/components/atoms/Course";
 import { trpc } from "@/utils/trpc";
-import { Course as CourseObj } from "@prisma/client";
-import { Dropdown } from "@/components/atoms";
 import { Menu } from "@headlessui/react";
+import { Course as CourseObj } from "@prisma/client";
 import classNames from "classnames";
+import { useMemo, useState } from "react";
+import { NextPageWithLayout } from "./_app";
 
 //Row Component
 const Row = ({ course }: { course: CourseObj }) => {
@@ -21,9 +20,12 @@ const Row = ({ course }: { course: CourseObj }) => {
 };
 
 const FinancialPage: NextPageWithLayout = () => {
-
-  const [term,setTerm] = useState("SPRING 2022");
-  const [allTerms,setAllTerms] = useState(["SPRING 2022","WINTER 2021","SUMMER 2021"]);
+  const [term, setTerm] = useState("SPRING 2022");
+  const [allTerms, setAllTerms] = useState([
+    "SPRING 2022",
+    "WINTER 2021",
+    "SUMMER 2021",
+  ]);
 
   const financialStatement = trpc.getFinancialStatementByTerm.useQuery({
     term: term,
@@ -67,30 +69,30 @@ const FinancialPage: NextPageWithLayout = () => {
         </p>
         <Dropdown buttonText="Filter">
           {allTerms.map((term) => {
-              return (
-                <Menu.Item key={term}>
-                  {({ active }) => (
-                    <div
-                      onClick={() => {
-                        setTerm(term);
-                      }}
-                      className={classNames(
-                        "hover:cursor-pointer",
-                        active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                        "block px-4 py-2 text-sm"
-                      )}
-                    >
-                      {term}
-                    </div>
-                  )}
-                </Menu.Item>
-              );
-            })}
+            return (
+              <Menu.Item key={term}>
+                {({ active }) => (
+                  <div
+                    onClick={() => {
+                      setTerm(term);
+                    }}
+                    className={classNames(
+                      "hover:cursor-pointer",
+                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                      "block px-4 py-2 text-sm"
+                    )}
+                  >
+                    {term}
+                  </div>
+                )}
+              </Menu.Item>
+            );
+          })}
         </Dropdown>
         <Dropdown buttonText="Add Course">
           {allCourses.data?.courses.map((course) => {
             return (
-              <Menu.Item>
+              <Menu.Item key={course.id}>
                 {({ active }) => (
                   <div
                     onClick={() => {
@@ -115,7 +117,7 @@ const FinancialPage: NextPageWithLayout = () => {
           })}
         </Dropdown>
       </div>
-      <div className="flex flex-col content-between max-w-full border border-black">
+      <div className="flex flex-col content-between max-w-full border-b border-gray-300">
         <div className="flex m-3">
           <p className="flex-1 text-lg font-bold text-left">Courses</p>
           <p className="flex-1 text-lg font-bold text-center">Costs</p>
@@ -146,9 +148,13 @@ const FinancialPage: NextPageWithLayout = () => {
               <p className="flex-1 text-left">Total Credits:</p>
               <p className="flex-1 text-center">{totalCredits}</p>
               <div className="flex-1 text-center">
-                <Button theme="filled" onClick={() => {
-                  window.location.href="https://www.uvic.ca/residence/future-residents/fees/payments/index.php";
-                }}>
+                <Button
+                  theme="filled"
+                  onClick={() => {
+                    window.location.href =
+                      "https://www.uvic.ca/residence/future-residents/fees/payments/index.php";
+                  }}
+                >
                   Pay Now
                 </Button>
               </div>

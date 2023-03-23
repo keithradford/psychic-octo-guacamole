@@ -50,7 +50,7 @@ export const getFinancialStatementByTermController = async ({
 }: {
   input: CreateFinancialStatementSchema;
 }) => {
-  const financialStatement = await prisma.financialStatemetn.findFirst({
+  let financialStatement = await prisma.financialStatemetn.findFirst({
     where: {
       term: input.term,
     },
@@ -58,6 +58,18 @@ export const getFinancialStatementByTermController = async ({
       courses: true,
     },
   });
+
+  if (!financialStatement) {
+    const courses: Course[] = [];
+
+    await prisma.financialStatemetn.create({
+      data: {
+        term: input.term,
+        paid: false,
+        courses: { create: courses },
+      },
+    });
+  }
 
   return {
     financialStatement,
