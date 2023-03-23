@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, use } from "react";
 import { NextPageWithLayout } from "./_app";
 import { Button } from "../components/atoms/Button";
 import Course from "../components/atoms/Course";
@@ -21,8 +21,12 @@ const Row = ({ course }: { course: CourseObj }) => {
 };
 
 const FinancialPage: NextPageWithLayout = () => {
+
+  const [term,setTerm] = useState("SPRING 2022");
+  const [allTerms,setAllTerms] = useState(["SPRING 2022","WINTER 2021","SUMMER 2021"]);
+
   const financialStatement = trpc.getFinancialStatementByTerm.useQuery({
-    term: "SPRING 2022",
+    term: term,
   });
   const allCourses = trpc.getAllCourses.useQuery();
 
@@ -61,9 +65,28 @@ const FinancialPage: NextPageWithLayout = () => {
         <p className="inline-block m-5 text-lg font-bold">
           Financial Statements
         </p>
-        <Button theme="outline" onClick={() => {}}>
-          Filter
-        </Button>
+        <Dropdown buttonText="Filter">
+          {allTerms.map((term) => {
+              return (
+                <Menu.Item key={term}>
+                  {({ active }) => (
+                    <div
+                      onClick={() => {
+                        setTerm(term);
+                      }}
+                      className={classNames(
+                        "hover:cursor-pointer",
+                        active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                        "block px-4 py-2 text-sm"
+                      )}
+                    >
+                      {term}
+                    </div>
+                  )}
+                </Menu.Item>
+              );
+            })}
+        </Dropdown>
         <Dropdown buttonText="Add Course">
           {allCourses.data?.courses.map((course) => {
             return (
@@ -123,7 +146,9 @@ const FinancialPage: NextPageWithLayout = () => {
               <p className="flex-1 text-left">Total Credits:</p>
               <p className="flex-1 text-center">{totalCredits}</p>
               <div className="flex-1 text-center">
-                <Button theme="filled" onClick={() => {}}>
+                <Button theme="filled" onClick={() => {
+                  window.location.href="https://www.uvic.ca/residence/future-residents/fees/payments/index.php";
+                }}>
                   Pay Now
                 </Button>
               </div>
