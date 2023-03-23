@@ -1,30 +1,20 @@
 import { NextPageWithLayout } from "./_app";
 
-import React, { PureComponent, useMemo } from "react";
-import {
-  BarChart,
-  Bar,
-  Cell,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-} from "recharts";
 import { Button } from "@/components/atoms";
 import { trpc } from "@/utils/trpc";
-
-const data01 = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-  { name: "Group E", value: 278 },
-  { name: "Group F", value: 189 },
-];
+import { useMemo, useState } from "react";
+import {
+  Bar,
+  BarChart,
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 const colors: string[] = [
   "#FFBF00",
@@ -39,22 +29,34 @@ const ReportingPage: NextPageWithLayout = () => {
   const financialStatements = trpc.getAllFinancialStatements.useQuery();
   const budget = trpc.getBudgetByTerm.useQuery({ term: "SPRING 2022" });
 
+  const [barLegend, setBarLegend] = useState<string[]>([]);
+
   const barChartData = useMemo(() => {
     if (!financialStatements.data?.financialStatements) return [];
 
-    const data = [];
+    const data: any[] = [];
 
     financialStatements.data.financialStatements.forEach((statement) => {
-      const courses: Map<string, number> = new Map<string, number>();
-      statement.courses.forEach((course) => {
-        courses.set(course.subjectCode, course.cost);
+      const dataPoint: any = {};
+      dataPoint["name"] = statement.term;
+
+      statement.courses.forEach((course, i) => {
+        setBarLegend((prev) => [...prev, course.title]);
+        dataPoint[course.title] = course.cost;
       });
-      data.push({
-        name: statement.term,
-        ...courses,
-      });
+
+      data.push(dataPoint);
     });
+
+    return data;
   }, [financialStatements.data?.financialStatements]);
+
+  const barChartDownloadData = useMemo(() => {
+    return (
+      "text/json;charset=utf-8," +
+      encodeURIComponent(JSON.stringify(barChartData))
+    );
+  }, [barChartData]);
 
   const pieChartData = useMemo(() => {
     if (!budget.data?.budget?.budgetBars) return [];
@@ -74,6 +76,13 @@ const ReportingPage: NextPageWithLayout = () => {
 
     return data;
   }, [budget.data?.budget]);
+
+  const pieChartDownloadData = useMemo(() => {
+    return (
+      "text/json;charset=utf-8," +
+      encodeURIComponent(JSON.stringify(pieChartData))
+    );
+  }, [pieChartData]);
 
   return (
     <div className="flex flex-row w-full py-24 place-content-around ">
@@ -138,9 +147,11 @@ const ReportingPage: NextPageWithLayout = () => {
           </PieChart>
         </ResponsiveContainer>
         <div className="flex justify-end w-full">
-          <Button theme="outline" onClick={() => {}}>
-            Export Data
-          </Button>
+          <a href={`data:${pieChartDownloadData}`} download="MealPlan.json">
+            <Button theme="outline" onClick={() => {}}>
+              Export Data
+            </Button>
+          </a>
         </div>
       </div>
       <div className="flex flex-col content-center justify-center">
@@ -172,15 +183,22 @@ const ReportingPage: NextPageWithLayout = () => {
             <YAxis />
             <Tooltip cursor={{ fillOpacity: 0.4 }} />
             <Legend />
-            <Bar dataKey="class1" fill="#8884d8" />
-            <Bar dataKey="class2" fill="#82ca9d" />
-            <Bar dataKey="class3" fill="#863d1c" />
+            {barLegend.map((key, i) => {
+              return (
+                <Bar dataKey={key} key={i} fill={colors[i % colors.length]} />
+              );
+            })}
           </BarChart>
         </ResponsiveContainer>
         <div className="flex justify-end w-full">
-          <Button theme="outline" onClick={() => {}}>
-            Export Data
-          </Button>
+          <a
+            href={`data:${barChartDownloadData}`}
+            download="TuitionPerTerm.json"
+          >
+            <Button theme="outline" onClick={() => {}}>
+              Export Data
+            </Button>
+          </a>
         </div>
       </div>
     </div>

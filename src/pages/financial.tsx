@@ -1,12 +1,12 @@
-import { useState, useMemo } from "react";
-import { NextPageWithLayout } from "./_app";
+import { Dropdown } from "@/components/atoms";
+import { trpc } from "@/utils/trpc";
+import { Menu } from "@headlessui/react";
+import { Course as CourseObj } from "@prisma/client";
+import classNames from "classnames";
+import { useMemo } from "react";
 import { Button } from "../components/atoms/Button";
 import Course from "../components/atoms/Course";
-import { trpc } from "@/utils/trpc";
-import { Course as CourseObj } from "@prisma/client";
-import { Dropdown } from "@/components/atoms";
-import { Menu } from "@headlessui/react";
-import classNames from "classnames";
+import { NextPageWithLayout } from "./_app";
 
 //Row Component
 const Row = ({ course }: { course: CourseObj }) => {
@@ -92,7 +92,7 @@ const FinancialPage: NextPageWithLayout = () => {
           })}
         </Dropdown>
       </div>
-      <div className="flex flex-col content-between max-w-full border border-black">
+      <div className="flex flex-col content-between max-w-full border-b border-gray-300">
         <div className="flex m-3">
           <p className="flex-1 text-lg font-bold text-left">Courses</p>
           <p className="flex-1 text-lg font-bold text-center">Costs</p>
