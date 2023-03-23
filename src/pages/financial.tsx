@@ -67,7 +67,7 @@ const FinancialPage: NextPageWithLayout = () => {
         <Dropdown buttonText="Add Course">
           {allCourses.data?.courses.map((course) => {
             return (
-              <Menu.Item>
+              <Menu.Item key={course.id}>
                 {({ active }) => (
                   <div
                     onClick={() => {
