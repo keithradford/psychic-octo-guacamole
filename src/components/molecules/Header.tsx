@@ -5,7 +5,7 @@ import {
   MagnifyingGlassIcon,
   ChevronUpIcon,
 } from "@heroicons/react/24/outline";
-import useLocalStorage from "@/utils/hooks/useLocalStorage";
+import useLocalStorage from "../../utils/hooks/useLocalStorage";
 import { Modal } from "./Modal";
 
 export const Header = () => {

@@ -2,8 +2,6 @@
 
 exports[`Index page should render correctly 1`] = `
 <div>
-  <div>
-    UVic Finance System
-  </div>
+  <div />
 </div>
 `;
