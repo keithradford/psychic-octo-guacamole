@@ -4,7 +4,7 @@ import { UpdateCourseSchema } from "../schemas/course.schema";
 const prisma = new PrismaClient();
 
 export const getAllCoursesController = async () => {
-  const courses = await prisma.course.findMany();
+  const courses = await prisma.course.findMany({});
 
   return {
     courses,

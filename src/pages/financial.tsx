@@ -1,9 +1,12 @@
-import { useState, useMemo } from "react";
-import { NextPageWithLayout } from "./_app";
+import { Dropdown } from "@/components/atoms";
+import { trpc } from "@/utils/trpc";
+import { Menu } from "@headlessui/react";
+import { Course as CourseObj } from "@prisma/client";
+import classNames from "classnames";
+import { useMemo } from "react";
 import { Button } from "../components/atoms/Button";
 import Course from "../components/atoms/Course";
-import { trpc } from "@/utils/trpc";
-import { Course as CourseObj } from "@prisma/client";
+import { NextPageWithLayout } from "./_app";
 
 //Row Component
 const Row = ({ course }: { course: CourseObj }) => {
@@ -21,6 +24,14 @@ const FinancialPage: NextPageWithLayout = () => {
   const financialStatement = trpc.getFinancialStatementByTerm.useQuery({
     term: "SPRING 2022",
   });
+  const allCourses = trpc.getAllCourses.useQuery();
+
+  const { mutateAsync: addCourseToFinancialStatement } =
+    trpc.addCourseToFinancialStatement.useMutation({
+      onSuccess: () => {
+        financialStatement.refetch();
+      },
+    });
 
   const totalCost: number = useMemo(() => {
     if (!financialStatement.data?.financialStatement?.courses) return 0;
@@ -53,11 +64,35 @@ const FinancialPage: NextPageWithLayout = () => {
         <Button theme="outline" onClick={() => {}}>
           Filter
         </Button>
-        <Button theme="filled" onClick={() => {}}>
-          Add Course
-        </Button>
+        <Dropdown buttonText="Add Course">
+          {allCourses.data?.courses.map((course) => {
+            return (
+              <Menu.Item key={course.id}>
+                {({ active }) => (
+                  <div
+                    onClick={() => {
+                      if (financialStatement.data?.financialStatement?.id)
+                        addCourseToFinancialStatement({
+                          courseId: course.id,
+                          financialStatementId:
+                            financialStatement.data.financialStatement.id,
+                        });
+                    }}
+                    className={classNames(
+                      "hover:cursor-pointer",
+                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                      "block px-4 py-2 text-sm"
+                    )}
+                  >
+                    {course.title}
+                  </div>
+                )}
+              </Menu.Item>
+            );
+          })}
+        </Dropdown>
       </div>
-      <div className="flex flex-col content-between max-w-full border border-black">
+      <div className="flex flex-col content-between max-w-full border-b border-gray-300">
         <div className="flex m-3">
           <p className="flex-1 text-lg font-bold text-left">Courses</p>
           <p className="flex-1 text-lg font-bold text-center">Costs</p>
