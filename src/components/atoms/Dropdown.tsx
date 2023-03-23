@@ -13,8 +13,8 @@ export function Dropdown({
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button>
-          <Button onClick={() => {}}>{buttonText}</Button>
+        <Menu.Button className="px-3 py-1 text-white transition-colors border border-white rounded-lg bg-primary hover:bg-opacity-90 active:bg-opacity-100">
+          {buttonText}
         </Menu.Button>
       </div>
 
