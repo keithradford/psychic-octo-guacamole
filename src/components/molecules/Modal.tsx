@@ -1,6 +1,5 @@
-import { Fragment, PropsWithChildren, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import { Fragment, PropsWithChildren, useRef } from "react";
 import { Button } from "../atoms";
 
 export function Modal({

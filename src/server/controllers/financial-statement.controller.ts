@@ -1,5 +1,8 @@
 import { Course, PrismaClient } from "@prisma/client";
-import { CreateFinancialStatementSchema } from "../schemas/financial-statement.schema";
+import {
+  AddCourseToFinancialStatementSchema,
+  CreateFinancialStatementSchema,
+} from "../schemas/financial-statement.schema";
 
 const prisma = new PrismaClient();
 
@@ -15,6 +18,25 @@ export const createFinancialStatementController = async ({
       term: input.term,
       paid: false,
       courses: { create: courses },
+    },
+  });
+
+  return {
+    financialStatement,
+  };
+};
+
+export const addCourseToFinancialStatementController = async ({
+  input,
+}: {
+  input: AddCourseToFinancialStatementSchema;
+}) => {
+  const financialStatement = await prisma.financialStatemetn.update({
+    where: {
+      id: input.financialStatementId,
+    },
+    data: {
+      courses: { connect: { id: input.courseId } },
     },
   });
 

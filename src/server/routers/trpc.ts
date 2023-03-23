@@ -11,6 +11,7 @@ import {
   updateCourse,
 } from "../controllers/course.controller";
 import {
+  addCourseToFinancialStatementController,
   createFinancialStatementController,
   getAllFinancialStatementsController,
   getFinancialStatementByTermController,
@@ -23,6 +24,7 @@ import {
 } from "../schemas/budget.schema";
 import { updateCourseSchema } from "../schemas/course.schema";
 import {
+  addCourseToFinancialStatementSchema,
   createFinancialStatementSchema,
   getFinancialStatementSchema,
 } from "../schemas/financial-statement.schema";
@@ -35,6 +37,11 @@ export const appRouter = t.router({
   createFinancialStatement: t.procedure
     .input(createFinancialStatementSchema)
     .mutation(({ input }) => createFinancialStatementController({ input })),
+  addCourseToFinancialStatement: t.procedure
+    .input(addCourseToFinancialStatementSchema)
+    .mutation(({ input }) =>
+      addCourseToFinancialStatementController({ input })
+    ),
   getFinancialStatementByTerm: t.procedure
     .input(getFinancialStatementSchema)
     .query(({ input }) => getFinancialStatementByTermController({ input })),
