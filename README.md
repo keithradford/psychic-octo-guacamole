@@ -1,5 +1,7 @@
 # University Finance System
 
+[Video overview of application](https://www.loom.com/share/9e05934a7a414436a5fe498988817261)
+
 ## SENG 371 Group 8
 
 | Member        | Student Number |
