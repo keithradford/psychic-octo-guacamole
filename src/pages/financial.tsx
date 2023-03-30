@@ -64,7 +64,7 @@ const FinancialPage: NextPageWithLayout = () => {
   return (
     <div className="flex flex-col w-full max-w-5xl">
       <div className="space-x-2">
-        <p className="inline-block m-5 text-lg font-bold">
+        <p className="inline-block text-lg font-bold">
           Financial Statements
         </p>
         <Dropdown buttonText="Filter">
