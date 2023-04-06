@@ -57,12 +57,6 @@ export const Header = () => {
           <NavLink link="/reporting" text="Reporting & Analysis" />
         </section>
         <section className="flex space-x-4">
-          <Button theme="outline" onClick={() => {}}>
-            <div className="flex items-center space-x-2">
-              <MagnifyingGlassIcon className="w-4 h-4" />
-              <ChevronUpIcon className="w-4 h-4" />
-            </div>
-          </Button>
           <Button theme="outline" onClick={onClick}>
             <div className="flex items-center space-x-2">
               <KeyIcon className="w-4 h-4 fill-primary" />

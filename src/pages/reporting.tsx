@@ -1,6 +1,6 @@
 import { NextPageWithLayout } from "./_app";
 
-import { Button } from "@/components/atoms";
+import { Button, Spinner } from "@/components/atoms";
 import { trpc } from "@/utils/trpc";
 import { useMemo, useState } from "react";
 import {
@@ -84,6 +84,13 @@ const ReportingPage: NextPageWithLayout = () => {
     );
   }, [pieChartData]);
 
+  if (financialStatements.isLoading || budget.isLoading)
+    return (
+      <div className="flex justify-center w-full">
+        <Spinner />
+      </div>
+    );
+
   return (
     <div className="flex flex-row w-full py-24 place-content-around ">
       <div className="flex flex-col content-center justify-center">
@@ -98,7 +105,7 @@ const ReportingPage: NextPageWithLayout = () => {
               textAnchor="middle"
               z={100}
             >
-              Meal Plan: Breakdown Analyis
+              Spending Breakdown
             </text>
             <Pie
               dataKey="value"
