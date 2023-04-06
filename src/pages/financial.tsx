@@ -72,28 +72,7 @@ const FinancialPage: NextPageWithLayout = () => {
     <div className="flex flex-col w-full max-w-5xl">
       <div className="space-x-2">
         <p className="inline-block text-lg font-bold">Financial Statements</p>
-        <Dropdown buttonText="Filter">
-          {allTerms.map((term) => {
-            return (
-              <Menu.Item key={term}>
-                {({ active }) => (
-                  <div
-                    onClick={() => {
-                      setTerm(term);
-                    }}
-                    className={classNames(
-                      "hover:cursor-pointer",
-                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-sm"
-                    )}
-                  >
-                    {term}
-                  </div>
-                )}
-              </Menu.Item>
-            );
-          })}
-        </Dropdown>
+
         <Dropdown buttonText="Add Course">
           {allCourses.data?.courses.map((course) => {
             return (
@@ -115,6 +94,28 @@ const FinancialPage: NextPageWithLayout = () => {
                     )}
                   >
                     {course.title}
+                  </div>
+                )}
+              </Menu.Item>
+            );
+          })}
+        </Dropdown>
+        <Dropdown buttonText={term}>
+          {allTerms.map((term) => {
+            return (
+              <Menu.Item key={term}>
+                {({ active }) => (
+                  <div
+                    onClick={() => {
+                      setTerm(term);
+                    }}
+                    className={classNames(
+                      "hover:cursor-pointer",
+                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                      "block px-4 py-2 text-sm"
+                    )}
+                  >
+                    {term}
                   </div>
                 )}
               </Menu.Item>
