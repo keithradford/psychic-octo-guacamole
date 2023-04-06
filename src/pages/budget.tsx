@@ -3,7 +3,7 @@ import { trpc } from "../utils/trpc";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { BudgetBar } from "@prisma/client";
 import { useMemo, useState } from "react";
-import { Button, Input, PercentBar } from "../components/atoms";
+import { Button, Input, PercentBar, Spinner } from "../components/atoms";
 import { NextPageWithLayout } from "./_app";
 
 export const BudgetSectionTitle = ({
@@ -96,6 +96,13 @@ const BudgetPage: NextPageWithLayout = () => {
 
     return { max, current };
   }, [spendBars]);
+
+  if (budget.isLoading)
+    return (
+      <div className="flex justify-center w-full">
+        <Spinner />
+      </div>
+    );
 
   return (
     <div className="flex flex-col w-full space-y-5">
