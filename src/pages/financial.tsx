@@ -1,4 +1,4 @@
-import { Button, Dropdown } from "@/components/atoms";
+import { Button, Dropdown, Spinner } from "@/components/atoms";
 import Course from "@/components/atoms/Course";
 import { trpc } from "@/utils/trpc";
 import { Menu } from "@headlessui/react";
@@ -61,12 +61,17 @@ const FinancialPage: NextPageWithLayout = () => {
     return credits;
   }, [financialStatement.data?.financialStatement]);
 
+  if (financialStatement.isLoading || allCourses.isLoading)
+    return (
+      <div className="flex justify-center w-full">
+        <Spinner />
+      </div>
+    );
+
   return (
     <div className="flex flex-col w-full max-w-5xl">
       <div className="space-x-2">
-        <p className="inline-block text-lg font-bold">
-          Financial Statements
-        </p>
+        <p className="inline-block text-lg font-bold">Financial Statements</p>
         <Dropdown buttonText="Filter">
           {allTerms.map((term) => {
             return (
