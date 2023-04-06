@@ -98,7 +98,7 @@ const ReportingPage: NextPageWithLayout = () => {
               textAnchor="middle"
               z={100}
             >
-              Meal Plan: Breakdown Analyis
+              Spending Breakdown
             </text>
             <Pie
               dataKey="value"
