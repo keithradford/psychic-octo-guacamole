@@ -77,7 +77,7 @@ const ReportingPage: NextPageWithLayout = () => {
   }, [budget.data?.budget]);
 
   const pieChartDownloadData = () => {
-    const fileName = "MealPlan";
+    const fileName = "Expenses";
     const exportType = exportFromJSON.types.csv;
     exportFromJSON({ data: pieChartData, fileName, exportType });
   };
