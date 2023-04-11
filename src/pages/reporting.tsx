@@ -1,5 +1,5 @@
 import { NextPageWithLayout } from "./_app";
-
+import exportFromJSON from "export-from-json";
 import { Button, Spinner } from "@/components/atoms";
 import { trpc } from "@/utils/trpc";
 import { useMemo, useState } from "react";
@@ -51,12 +51,11 @@ const ReportingPage: NextPageWithLayout = () => {
     return data;
   }, [financialStatements.data?.financialStatements]);
 
-  const barChartDownloadData = useMemo(() => {
-    return (
-      "text/json;charset=utf-8," +
-      encodeURIComponent(JSON.stringify(barChartData))
-    );
-  }, [barChartData]);
+  const barChartDownloadData = () => {
+    const fileName = "TuitionPerTerm";
+    const exportType = exportFromJSON.types.csv;
+    exportFromJSON({ data: barChartData, fileName, exportType });
+  };
 
   const pieChartData = useMemo(() => {
     if (!budget.data?.budget?.budgetBars) return [];
@@ -77,12 +76,11 @@ const ReportingPage: NextPageWithLayout = () => {
     return data;
   }, [budget.data?.budget]);
 
-  const pieChartDownloadData = useMemo(() => {
-    return (
-      "text/json;charset=utf-8," +
-      encodeURIComponent(JSON.stringify(pieChartData))
-    );
-  }, [pieChartData]);
+  const pieChartDownloadData = () => {
+    const fileName = "Expenses";
+    const exportType = exportFromJSON.types.csv;
+    exportFromJSON({ data: pieChartData, fileName, exportType });
+  };
 
   if (financialStatements.isLoading || budget.isLoading)
     return (
@@ -154,11 +152,9 @@ const ReportingPage: NextPageWithLayout = () => {
           </PieChart>
         </ResponsiveContainer>
         <div className="flex justify-end w-full">
-          <a href={`data:${pieChartDownloadData}`} download="MealPlan.json">
-            <Button theme="outline" onClick={() => {}}>
-              Export Data
-            </Button>
-          </a>
+          <Button theme="outline" onClick={pieChartDownloadData}>
+            Export Data
+          </Button>
         </div>
       </div>
       <div className="flex flex-col content-center justify-center">
@@ -198,14 +194,9 @@ const ReportingPage: NextPageWithLayout = () => {
           </BarChart>
         </ResponsiveContainer>
         <div className="flex justify-end w-full">
-          <a
-            href={`data:${barChartDownloadData}`}
-            download="TuitionPerTerm.json"
-          >
-            <Button theme="outline" onClick={() => {}}>
-              Export Data
-            </Button>
-          </a>
+          <Button theme="outline" onClick={barChartDownloadData}>
+            Export Data
+          </Button>
         </div>
       </div>
     </div>
